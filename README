@@ -1,12 +1,10 @@
 GOAL
----------------------------
+===========================
 Make an autonomous device based on Raspberry Pi board to monitor temperature and send results to an url.
 
-
-
 CONFIGURATION INSTRUCTIONS:
----------------------------
-Set wlan interface to auto connect:
+===========================
+1) Set wlan interface to auto connect:
 
 nano /etc/network/interfaces
 
@@ -16,16 +14,16 @@ iface wlan1 inet dhcp
 wpa-ssid "<YOUR-SSID>"
 wpa-psk "<YOUR-PASSWD>"
 
-Test modules:
+2) Test modules:
 
 modprobe w1-gpio
 modprobe w1-therm
 
-Check loaded modules:
+3) Check loaded modules:
 
 lsmod | grep w1
 
-Test temperature sensor:
+4) Test temperature sensor:
 
 cat /sys/bus/w1/devices/28-*/w1_slave
 
@@ -34,7 +32,7 @@ It should give a response like that:
 b2 01 4b 46 7f ff 0e 10 8c : crc=8c YES
 b2 01 4b 46 7f ff 0e 10 8c t=27125
 
-Get the correct device file name:
+5) Get the correct device file name:
 
 ls /sys/bus/w1/devices/*
 
@@ -55,21 +53,21 @@ Test it again:
 
 cat /sys/bus/w1/devices/28-000003973b49/w1_slave
 
-Add modules for auto loading;
+6) Add modules for auto loading;
 
 echo "w1-gpio" >> /etc/modules
 echo "w1-therm" >> /etc/modules
 
-Create directories:
+5) Create application directories:
 
 mkdir /etc/j-rpi-therm-d
 mkdir /var/log/j-rpi-therm-d
 
-Create log file:
+6) Create application log file:
 
 touch /var/log/j-rpi-therm-d/j-rpi-therm-d.log
 
-Copy runtime/conf files:
+7) Copy application runtime/conf files:
 
 Copy conf.properties /etc/j-rpi-therm-d
 Copy j-rpi-therm-d.jar to /usr/lib
@@ -77,14 +75,22 @@ Copy j-rpi-therm-d-exec.sh to /usr/bin
 Copy j-rpi-therm-d-kill.sh to /usr/bin
 Copy j-rpi-therm-d to /etc/init.d/
 
-Give permissions
+8) Give permissions
 
 chmod +x /usr/bin/j-rpi-therm-d-exec.sh
 chmod +x /usr/bin/j-rpi-therm-d-kill.sh
 chmod 755 /etc/init.d/j-rpi-therm-d
 
-Edit conf.properties (see example bellow):
+9) Edit conf.properties (see example bellow):
 
-Add service to be started automatically:
+therm.file.path		=	/sys/bus/w1/devices/28-000003973b49/w1_slave
+read.cycle			=	60000
+therm.url.var1		=   v1
+therm.url.var2		=   v2	
+therm.location      =   sala5
+therm.url			=   http://your-domain/thermd/store.php
+
+10) Add service to be started automatically:
 
 update-rc.d j-rpi-therm-d defaults
+
