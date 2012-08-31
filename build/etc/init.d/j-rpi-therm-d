@@ -1,0 +1,24 @@
+#! /bin/sh
+# /etc/init.d/j-rpi-therm-d
+#
+
+# Some things that run always
+touch /var/lock/j-rpi-therm-d
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting j-rpi-therm-d "
+    /usr/bin/j-rpi-therm-d-exec.sh
+    ;;
+  stop)
+    echo "Stopping j-rpi-therm-d"
+    /usr/bin/j-rpi-therm-d-kill.sh
+    ;;
+  *)
+    echo "Usage: /etc/init.d/j-rpi-therm-d {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
