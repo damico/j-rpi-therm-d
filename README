@@ -1,0 +1,86 @@
+###########################
+CONFIGURATION INSTRUCTIONS:
+###########################
+
+Set wlan interface to auto connect:
+
+nano /etc/network/interfaces
+
+allow-hotplug wlan1
+auto wlan1
+iface wlan1 inet dhcp
+wpa-ssid "<YOUR-SSID>"
+wpa-psk "<YOUR-PASSWD>"
+
+Test modules:
+
+modprobe w1-gpio
+modprobe w1-therm
+
+Check loaded modules:
+
+lsmod | grep w1
+
+Test temperature sensor:
+
+cat /sys/bus/w1/devices/28-*/w1_slave
+
+It should give a response like that:
+
+b2 01 4b 46 7f ff 0e 10 8c : crc=8c YES
+b2 01 4b 46 7f ff 0e 10 8c t=27125
+
+Get the correct device file name:
+
+ls /sys/bus/w1/devices/*
+
+The response will be something like:
+
+28-000003973b49  w1_master_attempts    w1_master_search
+driver w1_master_max_slave_count  w1_master_slave_count
+power w1_master_name    w1_master_slaves
+subsystem w1_master_pointer    w1_master_timeout
+uevent w1_master_pullup
+w1_master_add w1_master_remove
+
+Where the device file is 28-000003973b49
+
+At the end, the correct address of sensor will be: /sys/bus/w1/devices/28-000003973b49/w1_slave
+
+Test it again:
+
+cat /sys/bus/w1/devices/28-000003973b49/w1_slave
+
+Add modules for auto loading;
+
+echo "w1-gpio" >> /etc/modules
+echo "w1-therm" >> /etc/modules
+
+Create directories:
+
+mkdir /etc/j-rpi-therm-d
+mkdir /var/log/j-rpi-therm-d
+
+Create log file:
+
+touch /var/log/j-rpi-therm-d/j-rpi-therm-d.log
+
+Copy runtime/conf files:
+
+Copy conf.properties /etc/j-rpi-therm-d
+Copy j-rpi-therm-d.jar to /usr/lib
+Copy j-rpi-therm-d-exec.sh to /usr/bin
+Copy j-rpi-therm-d-kill.sh to /usr/bin
+Copy j-rpi-therm-d to /etc/init.d/
+
+Give permissions
+
+chmod +x /usr/bin/j-rpi-therm-d-exec.sh
+chmod +x /usr/bin/j-rpi-therm-d-kill.sh
+chmod 755 /etc/init.d/j-rpi-therm-d
+
+Edit conf.properties (see example bellow):
+
+Add service to be started automatically:
+
+update-rc.d j-rpi-therm-d defaults
