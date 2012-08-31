@@ -1,7 +1,11 @@
-###########################
-CONFIGURATION INSTRUCTIONS:
-###########################
+GOAL
+---------------------------
+Make an autonomous device based on Raspberry Pi board to monitor temperature and send results to an url.
 
+
+
+CONFIGURATION INSTRUCTIONS:
+---------------------------
 Set wlan interface to auto connect:
 
 nano /etc/network/interfaces
