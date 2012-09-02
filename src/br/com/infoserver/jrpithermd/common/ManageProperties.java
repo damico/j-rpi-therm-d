@@ -18,7 +18,7 @@ public class ManageProperties {
 		// Read properties file.
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream(Constants.confFilePath));
+			properties.load(new FileInputStream(Constants.CONF_FILE_PATH));
 		} catch (IOException e) {
 			LoggerManager.getInstance().logAtExceptionTime(this.getClass().getName(), e.getMessage());
 		}

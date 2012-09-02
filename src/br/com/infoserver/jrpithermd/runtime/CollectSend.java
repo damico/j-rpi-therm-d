@@ -1,15 +1,8 @@
 package br.com.infoserver.jrpithermd.runtime;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
-import java.util.Properties;
-
-
 import br.com.infoserver.jrpithermd.common.Constants;
 import br.com.infoserver.jrpithermd.common.LoggerManager;
 import br.com.infoserver.jrpithermd.common.ManageProperties;
-import br.com.infoserver.jrpithermd.common.Utils;
 import br.com.infoserver.jrpithermd.thread.ReadThermThread;
 
 public class CollectSend {
@@ -20,7 +13,7 @@ public class CollectSend {
 	public static void main(String[] args) {
 		
 		
-		LoggerManager.getInstance().logAtDebugTime("CollectSend", "j-rpi-therm-d v0.1");
+		LoggerManager.getInstance().logAtDebugTime("CollectSend", Constants.APP_NAME + " ["+Constants.APP_VERSION+"]");
 
 		
 		/**
@@ -28,7 +21,7 @@ public class CollectSend {
 			69 01 4b 46 7f ff 07 10 5e t=22562
 		 */
 		
-		String thermFilePath = ManageProperties.getInstance().read(Constants.thermFilePath);
+		String thermFilePath = ManageProperties.getInstance().read(Constants.THERM_FILE_PATH);
 		
 		int readCycle = 60000;
 
