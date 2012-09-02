@@ -1,6 +1,33 @@
 GOAL
 ===========================
-Make an autonomous device based on Raspberry Pi board to monitor temperature and send results to an url.
+Make an autonomous device based on Raspberry Pi board to monitor temperature and send results to an url throught a Wifi connection.
+Once the device is ready and powered it should be able to:
+
+a) Auto-connect to a Wifi Access Point with a PSK encryption;
+b) Auto-load the kernel modules required by temperature sensor;
+c) Auto-start an OS service which loads an application that catches the temperature measurement and sends to an url.
+ 
+The application that catches the temperature measurement and sends to an url, must log all its behaviors and possible exceptions. 
+Also the application must be configurable with the following parameters:
+
+a) therm.file.path	= /sys/bus/w1/devices/28-000003973b49/w1_slave
+[Path of sensor device. DO NOT USE wildcards]
+
+b) read.cycle = 60000
+[Interval between each measurement in milliseconds]
+
+c) therm.url.var1 = v1
+[HTTP GET Request parameter which will be used to store the temperature]
+
+d) therm.url.var2 = v2	
+[HTTP GET Request parameter which will be used to store the location of measurement]
+
+e) therm.location = room5
+[Location of measurement]
+
+f) therm.url =  http://your-domain/thermd/store.php
+[URL that will be requested through GET and send data from var1 and var2]
+
 
 CONFIGURATION INSTRUCTIONS:
 ===========================
@@ -83,12 +110,12 @@ chmod 755 /etc/init.d/j-rpi-therm-d
 
 9) Edit conf.properties (see example bellow):
 
-therm.file.path		=	/sys/bus/w1/devices/28-000003973b49/w1_slave
-read.cycle			=	60000
-therm.url.var1		=   v1
-therm.url.var2		=   v2	
-therm.location      =   sala5
-therm.url			=   http://your-domain/thermd/store.php
+therm.file.path	= /sys/bus/w1/devices/28-000003973b49/w1_slave
+read.cycle = 60000
+therm.url.var1 = v1
+therm.url.var2 = v2	
+therm.location = room5
+therm.url =  http://your-domain/thermd/store.php
 
 10) Add service to be started automatically:
 
