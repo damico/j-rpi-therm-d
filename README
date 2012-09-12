@@ -8,6 +8,10 @@ a) Auto-connect to a Wifi Access Point with a PSK encryption;
 b) Auto-load the kernel modules required by temperature sensor;
 c) Auto-start an OS service which loads an application that catches the temperature measurement and sends to an url. This service must be in init.d with support to start and stop commands.
 
+NOTE 1: In order to get Raspberry Pi working with wifi, out-of-the-box without a need for extra power supply, like a powered usb hub, I've choosen the [D-link USB Wifi adaptor Nano Dwa-131], which worked perfect! 
+NOTE 2: In order to get Raspberry Pi working with DS18B20 thought 1-wire connection you will need a Linux kernel with w1-gpio and w1-therm modules. For that I've used, Adafruit Occidentalis Linux distro, based on Raspbian Wheezy [http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/occidentalis-v0-dot-2];   
+
+
 A picture of a working device can be seen here:
 https://picasaweb.google.com/lh/photo/Cd9MyKwdP7FKVZ821SIfhtMTjNZETYmyPJy0liipFm0?feat=directlink
  
